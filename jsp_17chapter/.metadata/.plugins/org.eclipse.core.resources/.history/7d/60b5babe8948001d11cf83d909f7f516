@@ -1,0 +1,28 @@
+package sec01.ex01;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MemberDAO {
+	
+	private DataSource dataFactory;
+	private Connection conn;
+	private PreparedStatment pstmt;
+	
+	
+	
+	public List<MemberVO> listMembers() {
+		List<MemberVO> membersList = new ArrayList<MemberVO>();
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select & from t_member order by joinDate desc";
+			System.out.println(query);
+			while(rs.next()) {
+				String id = rs.
+				
+			}
+			
+		}
+	}
+
+}

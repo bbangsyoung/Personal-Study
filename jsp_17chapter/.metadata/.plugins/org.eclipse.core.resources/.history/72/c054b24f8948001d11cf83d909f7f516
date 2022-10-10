@@ -1,0 +1,13 @@
+package sec01.ex01;
+
+import java.util.List;
+
+public class MemberDAO {
+	
+	
+	
+	public List<MemberVO> listMembers() {
+		List<MemberVO> membersList = new ArrayList<MemberVO>();
+	}
+
+}
