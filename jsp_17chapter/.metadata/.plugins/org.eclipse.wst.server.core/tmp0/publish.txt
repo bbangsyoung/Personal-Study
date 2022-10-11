@@ -1,3 +1,0 @@
-#Tomcat publish data
-#Mon Oct 10 21:54:53 KST 2022
-org.eclipse.jst.jee.server\:pro17=C\:\\apache-tomcat9\\wtpwebapps\\pro17
