@@ -11,25 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class FileDownloadController
- */
 @WebServlet("/download.do")
 public class FileDownloadController extends HttpServlet {
 	private static String ARTICLE_IMAGE_REPO = "C:\\board\\article_image";
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
 		doHandle(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
 		doHandle(request, response);
 	}
@@ -37,8 +26,10 @@ public class FileDownloadController extends HttpServlet {
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
+		
 		String imageFileName = (String) request.getParameter("imageFileName");
 		String articleNO = request.getParameter("articleNO");
+		
 		System.out.println("imageFileName=" + imageFileName);
 		OutputStream out = response.getOutputStream();
 		String path = ARTICLE_IMAGE_REPO + "\\" + articleNO + "\\" + imageFileName;
@@ -47,6 +38,7 @@ public class FileDownloadController extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache");
 		response.addHeader("Content-disposition", "attachment;fileName=" + imageFileName);
 		FileInputStream in = new FileInputStream(imageFile);
+		
 		byte[] buffer = new byte[1024 * 8];
 		while (true) {
 			int count = in.read(buffer);

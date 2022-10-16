@@ -23,6 +23,7 @@
      <td >글번호</td>
      <td >작성자</td>              
      <td >제목</td>
+     <td >내용</td>
      <td >작성일</td>
   </tr>
 <c:choose>
@@ -38,9 +39,10 @@
   <c:when test="${articlesList !=null}" >
     <c:forEach  var="article" items="${articlesList}" varStatus="articleNum" >
      <tr align="center">
-   <td width="5%">${articleNum.count}</td>
+   <td width="5%">${article.articleNO}</td>
    <td width="10%">${article.id}</td>
-   <td align='left'  width="35%">${article.title}</td>
+   <td align='left'  width="30%">${article.title}</td>
+   <td align='left'>${article.content}</td>
 
      <td  width="10%"><fmt:formatDate value="${article.writeDate}" /></td> 
    </tr>

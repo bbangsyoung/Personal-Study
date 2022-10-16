@@ -51,7 +51,7 @@
 	    <td colspan="2">
 	       <input type="submit" value="글쓰기" />
 	       <input type=button value="목록보기" onClick="backToList(this.form)" />
-	    </td>n
+	    </td>
      </tr>
     </table>
   </form>

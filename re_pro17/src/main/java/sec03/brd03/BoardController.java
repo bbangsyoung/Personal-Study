@@ -23,9 +23,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
 
-@WebServlet("/board/*")
+/*@WebServlet("/board/*")*/
 public class BoardController extends HttpServlet {
-	private static String ARTICLE_IMAGE_REPO = "C:\\board\\article_image";
+	private static String ARTICLE_IMAGE_REPO = "C:/board/article_image";
 	BoardService boardService;
 	ArticleVO articleVO;
 
@@ -75,18 +75,23 @@ public class BoardController extends HttpServlet {
 				articleVO.setTitle(title);
 				articleVO.setContent(content);
 				articleVO.setImageFileName(imageFileName);
+				
+				//테이블에 새 글을 추가한 후 새 글에 대한 글번호를 가져옴
 				articleNO= boardService.addArticle(articleVO);
 				
+				//파일을 첨부한 경우에만 수행
 				if(imageFileName!=null && imageFileName.length()!=0) {
-				    File srcFile = new 	File(ARTICLE_IMAGE_REPO +"\\"+"temp"+"\\"+imageFileName);
-					File destDir = new File(ARTICLE_IMAGE_REPO +"\\"+articleNO);
+				    File srcFile = new 	File(ARTICLE_IMAGE_REPO +"/"+"temp"+"/"+imageFileName);
+					File destDir = new File(ARTICLE_IMAGE_REPO +"/"+articleNO);
 					destDir.mkdirs();
 					FileUtils.moveFileToDirectory(srcFile, destDir, true);
 				}
 				PrintWriter pw = response.getWriter();
 				pw.print("<script>" 
 				         +"  alert('새글발행!!!!!!!!!!');" 
-						 +" location.href='"+request.getContextPath()+"/board/listArticles.do';"
+						 +" location.href='"
+				         +request.getContextPath()
+						 +"/board/listArticles.do';"
 				         +"</script>");
 
 				return;
@@ -117,9 +122,9 @@ public class BoardController extends HttpServlet {
 					System.out.println(fileItem.getFieldName() + "=" + fileItem.getString(encoding));
 					articleMap.put(fileItem.getFieldName(), fileItem.getString(encoding));
 				} else {
-					System.out.println("�Ķ���͸�:" + fileItem.getFieldName());
+					System.out.println("파일이름인듯:" + fileItem.getFieldName());
 
-					System.out.println("����ũ��:" + fileItem.getSize() + "bytes");
+					System.out.println("파일크기" + fileItem.getSize() + "bytes");
 
 					if (fileItem.getSize() > 0) {
 						int idx = fileItem.getName().lastIndexOf("\\");
@@ -128,8 +133,8 @@ public class BoardController extends HttpServlet {
 						}
 
 						String fileName = fileItem.getName().substring(idx + 1);
-						System.out.println("���ϸ�:" + fileName);
-						articleMap.put(fileItem.getFieldName(), fileName);  //�ͽ��÷η����� ���ε� ������ ��� ���� �� map�� ���ϸ� ����
+						System.out.println("fileName:" + fileName);
+						articleMap.put(fileItem.getFieldName(), fileName);  
 						File uploadFile = new File(currentDirPath + "\\temp\\" + fileName);
 						fileItem.write(uploadFile);
 

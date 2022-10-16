@@ -49,9 +49,7 @@ public class BoardDAO {
 				article.setContent(content);
 				article.setId(id);
 				article.setWriteDate(writeDate);
-				articlesList.add(article);
-				
-				System.out.println("이거뜨나보자" + title);
+				articlesList.add(article);				
 			}
 			rs.close();
 			pstmt.close();
@@ -65,7 +63,7 @@ public class BoardDAO {
 	private int getNewArticleNO() {
 		try {
 			conn = dataFactory.getConnection();
-			String query = "SELECT  max(articleNO) from t_board ";
+			String query = "SELECT  max(articleNO) from t_board";
 			System.out.println(query);
 			pstmt = conn.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery(query);
@@ -84,7 +82,7 @@ public class BoardDAO {
 		int articleNO = getNewArticleNO();
 		try {
 			conn = dataFactory.getConnection();
-			int parentNO = article.getParentNO(); //새글을 추가하기전에 새글에 대한 글번호 가져옴
+			
 			String title = article.getTitle();
 			String content = article.getContent();
 			String id = article.getId();
@@ -109,7 +107,5 @@ public class BoardDAO {
 	}
 
 }
-
-
 
 
