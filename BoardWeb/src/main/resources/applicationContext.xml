@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+
+	<context:component-scan base-package="com.springbook.biz"></context:component-scan>
+	
+	
+	<bean id="around" class="com.springbook.biz.common.AroundAdvice"></bean>
+
+	<aop:config>
+		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"></aop:pointcut>
+
+		<aop:aspect ref="around">
+			<aop:around pointcut-ref="allPointcut"	method="aroundLog" />
+		</aop:aspect>
+
+
+	</aop:config>
+
+
+	<!-- <bean id="collectionBean" class="com.springbook.injection.CollectionBean"> 
+		<property name="addressList"> <list> <value>서울시 강남구 역삼동 절대싫어</value> <value>서울시 
+		성동구 행당동 흠 괜찮을지도</value> <value>안산시 한대역앞 감성낙곱새</value> <value>새우먹고싶은사람 저요~</value> 
+		</list> </property> </bean> -->
+
+
+
+</beans>
