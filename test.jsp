@@ -9,7 +9,7 @@
   Connection conn=null;
 
   try{
-	 String jdbcUrl = "jdbc:mariadb://127.0.0.1:3306/univ";
+	 String jdbcUrl = "jdbc:mariadb://127.0.0.1:3306/petfood";
      String dbId = "root";
      String dbPass = "12345";
 	
