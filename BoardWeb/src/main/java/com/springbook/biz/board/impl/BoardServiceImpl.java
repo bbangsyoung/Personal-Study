@@ -12,43 +12,35 @@ import com.springbook.biz.common.LogAdvice;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
-
+	
 	@Autowired
 	private BoardDAO boardDAO;
-
 	
-	public BoardServiceImpl() {
 
-	}
-
-
+	@Override
 	public void insertBoard(BoardVO vo) {
-
-
+	
 		boardDAO.insertBoard(vo);
 	}
 
-	
+	@Override
 	public void updateBoard(BoardVO vo) {
-
 		boardDAO.updateBoard(vo);
-	};
+	}
 
-	
+	@Override
 	public void deleteBoard(BoardVO vo) {
-
 		boardDAO.deleteBoard(vo);
-	};
+	}
 
-	
-	public BoardVO getBoard(BoardVO vo) {
+	@Override
+	public void getBoard(BoardVO vo) {
+		boardDAO.getBoard(vo);
+	}
 
-		return  boardDAO.getBoard(vo);
-	};
-
-	
+	@Override
 	public List<BoardVO> getBoardList(BoardVO vo) {
-
 		return boardDAO.getBoardList(vo);
-	};
+	}
+
 }
