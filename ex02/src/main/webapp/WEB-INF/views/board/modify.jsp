@@ -25,7 +25,7 @@
 
 
 
-					<form role="form" action="/board/modify" method="post">
+					<form>
 
 						<div class="form-group">
 							<label>Bno</label> <input class="form-control" name="bno"
@@ -93,32 +93,90 @@
 </div>
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
+	$(document).ready(function(){
+		var formObj = $("form");
+		
+		$('button').on("click", function(e){
+			e.preventDefault();
+			var operation = $(this).data("oper");
+			console.log(operation);
+			
+			if(operation === 'remove'){
+				formObj.attr("action", "/board/remove");
+			}else if(operation === 'list'){
+				//move to list
+				formObj.attr("action", "/board/list").attr("method", "get");
+				formObj.empty();
+			}
+			formObj.submit();
+		});
+	});
+</script> -->
+
+
+
+ <script type="text/javascript">
 	$(document).ready(function() {
 
 		var formObj = $("form");
+		
 		$('button').on("click", function(e) {
 
-			e.preventDefault();
+			
+			//디폴트값을 막아버리는 코드
+			e.preventDefault();			
+			
+			
 			let operation = $(this).data("oper");
 
 			console.log(operation);
 
-			if (operation === 'remove') {
-				formObj.attr("action", "/board/remove");
-
-			} else if (operation === 'list') {
-				formObj.attr("action", "/board/list").atrt("method", "post");
+			if (operation === 'list') {				
+				formObj.attr("action", "/board/list").attr("method", "get");
+				formObj.empty();
+				
+			} else if (operation === 'remove') {
+				formObj.attr("action", "/board/remove").attr("method", "post");
 
 			} else if  (operation === 'modify') {
-				formObj.attr("action", "/board/modify");
+				formObj.attr("action", "/board/modify").attr("method", "post");
 			}
 			
-			formObj.submit();
+			 formObj.submit(); 
 		});
 
 	});
-</script>
+</script>  
+
+
+
+
+
+
+
+<!-- <script type="text/javascript">
+$(document).ready(function(){
+	var formObj = $("form");
+	
+	$('button').on("click", function(e){
+		e.prevenDefault();
+	
+		var operation = $(this).data("oper");
+		console.log("operation : " + operation);
+		debugger;
+		
+		if(operation === 'remove'){
+			formObj.attr("action", "/board/remove");
+		}else if(operation === 'list'){
+			//move to list
+			formObj.attr("action", "/board/list").attr("method", "get");
+			formObj.empty();
+		}
+		formObj.submit();
+	});
+});
+</script> -->
 
 
 
