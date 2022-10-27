@@ -100,19 +100,20 @@
 		$('button').on("click", function(e) {
 
 			e.preventDefault();
-			var operation = $(this).data("oper");
+			let operation = $(this).data("oper");
 
 			console.log(operation);
 
 			if (operation === 'remove') {
 				formObj.attr("action", "/board/remove");
 
-			} else if (opertion === 'list') {
-				//move to list
-				self.location = "/board/list";
-				return;
+			} else if (operation === 'list') {
+				formObj.attr("action", "/board/list").atrt("method", "post");
 
+			} else if  (operation === 'modify') {
+				formObj.attr("action", "/board/modify");
 			}
+			
 			formObj.submit();
 		});
 
