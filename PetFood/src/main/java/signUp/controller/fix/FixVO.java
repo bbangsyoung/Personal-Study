@@ -1,16 +1,19 @@
 
 
-package login.user;
+package signUp.controller.fix;
 
 import java.sql.Date;
 
-public class UserVO {
+public class FixVO {
 	private String userName;
 	private String userId;
 	private String userPwd;
 	private String userNickname;
 	private String userEmail;
 	private Date joinDate;
+	private String petName;
+	private String petAge;
+	private String petKind;
 	
 	public String getUserName() {
 		return userName;
@@ -47,6 +50,27 @@ public class UserVO {
 	}
 	public void setJoinDate(Date joinDate) {
 		this.joinDate = joinDate;
+	}
+	
+	public String getpetName() {
+		return petName;
+	}
+	public void setpetName(String petName) {
+		this.petName = petName;
+	}
+	
+	public String getpetAge() {
+		return petAge;
+	}
+	public void setpetAge(String petAge) {
+		this.petAge = petAge;
+	}
+	
+	public String getpetKind() {
+		return petKind;
+	}
+	public void setpetKind(String petKind) {
+		this.petKind = petKind;
 	}
 	@Override
 	public String toString() {

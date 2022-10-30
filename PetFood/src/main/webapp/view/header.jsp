@@ -8,12 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개밥멍선생 : 소중한 반려견을 위한 건강한 레시피</title>
-    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/reset.css?after">
     <script src="../assets/js/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../assets/css/top.css?after">
     <link rel="stylesheet" href="../assets/css/bottom.css?after">
     <link rel="stylesheet" href="../assets/css/content_recipy.css?after">
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/content.css?after">
+    <link rel="stylesheet" href="../assets/css/main.css?after">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
@@ -29,14 +30,16 @@
                <c:choose>
                    <c:when test="${user ==null }" >
                           <ul>
-                              <li><a href="../login.jsp">로그인</a></li>
-                              <li><a href="#">회원가입</a></li>
+                              <li><a href="../login/login.jsp">로그인</a></li>
+                              <li><a href="../PetFood_SignUp.jsp">회원가입</a></li>
                               <li><a href="#">고객센터</a></li>
                           </ul>
                       </c:when>
                    <c:when test="${user !=null }" >
                           <ul>
                               <li><a href="#">"${user.userName}" 님 환영합니다</a></li>
+                               <li><a href="../FixController">마이페이지</a></li>                               
+                              <li><a href="${contextPath}/PetFood/LoginController/logout.do">로그아웃</a></li>
                               <li><a href="#">고객센터</a></li>
                           </ul>
                       </c:when>
@@ -44,13 +47,15 @@
                 </div>
                 <nav>
                     <ul class="menu">
-                        <li><a href="#">🍳 모두의 레시피</a></li>
+                        <li><a href="${contextPath}/PetFood/recipe/listArticles.do">🍳 모두의 레시피</a></li>
                         <li><a href="#">명예의 전당</a></li>
-                        <li><a href="#">커뮤니티</a></li>
+                        <li><a href="${contextPath}/PetFood/PetFoodBoard/listArticles.do">커뮤니티</a></li>
                         <li><a href="#">이벤트</a></li>
                     </ul>
                     <div id="logo">
-                        <img src="../assets/images/logo.png" alt="개밥멍선생" width="198" height="88">
+                    	<a href="${contextPath}/PetFood/view/main.jsp">
+                        	<img src="../assets/images/logo.png" alt="개밥멍선생" width="198" height="88">
+                        </a>
                     </div>
                     <div class="h_right">
                        <form action="${contextPath}/PetFood/PetFoodBoard/SearchBoardList.do" method="post">

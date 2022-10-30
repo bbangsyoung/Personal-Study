@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,12 +24,13 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
+import login.user.UserVO;
 
 @WebServlet("/recipe/*")
 public class BoardController extends HttpServlet {
 
+   
 	private static final long serialVersionUID = 1L;
-	private static String ARTICLE_IMAGE_REPO = "C:\\board\\recipe_image";
 	board.recipe.BoardService boardService;
 	board.recipe.ArticleVO articleVO;
 
@@ -36,6 +38,7 @@ public class BoardController extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		boardService = new BoardService();
 		articleVO = new ArticleVO();
+
 	}
 
 
@@ -49,6 +52,9 @@ public class BoardController extends HttpServlet {
 	}
 
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ServletContext context= request.getSession().getServletContext();
+		String uploadPath = context.getRealPath("/save/recipe");
+		
 		String nextPage = "";
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
@@ -68,8 +74,9 @@ public class BoardController extends HttpServlet {
 				articlesMap.put("section", section);
 				articlesMap.put("pageNum", pageNum);
 				
-				request.setAttribute("articlesMap", articlesMap);
+				request.setAttribute("articlesMap", articlesMap);				
 				nextPage = "/board/re_listArticles.jsp";
+
 				
 			} else if (action.equals("/listArticles.do")) {
 			
@@ -99,14 +106,17 @@ public class BoardController extends HttpServlet {
 				String imageFileName = articleMap.get("imageFileName");
 				
 
-				articleVO.setId("testuser");
+          	  	HttpSession session = (HttpSession)request.getSession();
+          	  	UserVO user = (UserVO)session.getAttribute("user");
+          	  	System.out.println(user);
+				articleVO.setId(user.getUserId());
 				articleVO.setTitle(title);
 				articleVO.setContent(content);
 				articleVO.setImageFileName(imageFileName);
 				articleNO= boardService.addArticle(articleVO);
 				if(imageFileName!=null && imageFileName.length()!=0) {
-				    File srcFile = new 	File(ARTICLE_IMAGE_REPO +"\\"+"temp"+"\\"+imageFileName);
-					File destDir = new File(ARTICLE_IMAGE_REPO +"\\"+articleNO);
+				    File srcFile = new File(uploadPath +"/"+"temp"+"/"+imageFileName);
+					File destDir = new File(uploadPath +"/"+articleNO);
 					destDir.mkdirs();
 					FileUtils.moveFileToDirectory(srcFile, destDir, true);
 					srcFile.delete();
@@ -140,12 +150,12 @@ public class BoardController extends HttpServlet {
 				boardService.modArticle(articleVO);
 				if (imageFileName != null && imageFileName.length() != 0) {
 					String originalFileName = articleMap.get("originalFileName");
-					File srcFile = new File(ARTICLE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
-					File destDir = new File(ARTICLE_IMAGE_REPO + "\\" + articleNO);
+					File srcFile = new File(uploadPath + "/" + "temp" + "/" + imageFileName);
+					File destDir = new File(uploadPath + "/" + articleNO);
 					destDir.mkdirs();
 					FileUtils.moveFileToDirectory(srcFile, destDir, true);
 					;
-					File oldFile = new File(ARTICLE_IMAGE_REPO + "\\" + articleNO + "\\" + originalFileName);
+					File oldFile = new File(uploadPath + "/" + articleNO + "/" + originalFileName);
 					oldFile.delete();
 				}
 				PrintWriter pw = response.getWriter();
@@ -157,7 +167,7 @@ public class BoardController extends HttpServlet {
 				int articleNO = Integer.parseInt(request.getParameter("articleNO"));
 				List<Integer> articleNOList = boardService.removeArticle(articleNO);
 				for (int _articleNO : articleNOList) {
-					File imgDir = new File(ARTICLE_IMAGE_REPO + "\\" + _articleNO);
+					File imgDir = new File(uploadPath + "/" + _articleNO);
 					if (imgDir.exists()) {
 						FileUtils.deleteDirectory(imgDir);
 					}
@@ -228,8 +238,11 @@ public class BoardController extends HttpServlet {
 
 	private Map<String, String> upload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String, String> articleMap = new HashMap<String, String>();
+		ServletContext context= request.getSession().getServletContext();
+		String uploadPath = context.getRealPath("/save/recipe");
 		String encoding = "utf-8";
-		File currentDirPath = new File(ARTICLE_IMAGE_REPO);
+		
+		File currentDirPath = new File(uploadPath);
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setRepository(currentDirPath);
 		factory.setSizeThreshold(1024 * 1024);
@@ -247,7 +260,7 @@ public class BoardController extends HttpServlet {
 					System.out.println("fileItem.getSize()" + fileItem.getSize() + "bytes");
 
 					if (fileItem.getSize() > 0) {
-						int idx = fileItem.getName().lastIndexOf("\\");
+						int idx = fileItem.getName().lastIndexOf("/");
 						if (idx == -1) {
 							idx = fileItem.getName().lastIndexOf("/");
 						}
@@ -255,7 +268,7 @@ public class BoardController extends HttpServlet {
 						String fileName = fileItem.getName().substring(idx + 1);
 						System.out.println("파일 생성이름:" + fileName);
 						articleMap.put(fileItem.getFieldName(), fileName);  
-						File uploadFile = new File(currentDirPath + "\\temp\\" + fileName);
+						File uploadFile = new File(currentDirPath + "/temp/" + fileName);
 						fileItem.write(uploadFile);
 
 					} // end if

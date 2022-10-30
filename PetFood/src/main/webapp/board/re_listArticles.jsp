@@ -14,6 +14,9 @@
 <%
 request.setCharacterEncoding("UTF-8");
 %>
+
+
+
 <!DOCTYPE html>
 <html>
 <jsp:include page="../view/header.jsp"></jsp:include>
@@ -103,24 +106,26 @@ request.setCharacterEncoding("UTF-8");
 			</select> <input type="text" name="searchKeyword" /> <input type="submit"
 				value="검색" onclick="search_btn">
 			</form>
-			<p class="wr_btn">
-				<a href="${contextPath}/recipe/articleForm.do">글쓰기</a>
-			</p>
+			<c:if test="${user.userName != null}">
+				<p class="wr_btn">
+					<a href="${contextPath}/recipe/articleForm.do">글쓰기</a>
+				</p>
+			</c:if>
 
 		</div>
 
 	</div>
 
 
-<div class="recipyContent">
+	<div class="recipyContent">
 
-    <c:choose>
+		<c:choose>
 
-        <c:when test="${articlesList ==null }">
-            <p align="center">
-                <b>등록된 글이 없습니다.</b>
-            </p>
-        </c:when>
+			<c:when test="${articlesList ==null }">
+				<p align="center">
+					<b>등록된 글이 없습니다.</b>
+				</p>
+			</c:when>
 
 			<c:when test="${articlesList !=null }">
 				<c:forEach var="article" items="${articlesList }"
@@ -129,8 +134,12 @@ request.setCharacterEncoding("UTF-8");
 
 					<div class="posting ">
 						<div class="photo">
-							<a href="${contextPath}/recipe/viewArticle.do?articleNO=${article.articleNO}"><img
-								src="${contextPath}/download2.do?articleNO=${article.articleNO}&imageFileName=${article.imageFileName}"></a>
+							<a
+								href="${contextPath}/recipe/viewArticle.do?articleNO=${article.articleNO}">
+								<img src="${contextPath}/download2.do?articleNO=${article.articleNO}&imageFileName=${article.imageFileName}">								
+								</a>						
+										 
+								 
 						</div>
 						<div class="con">
 
@@ -143,16 +152,16 @@ request.setCharacterEncoding("UTF-8");
 								</p>
 							</div>
 
-                <div class="test2">
-            <p>${article.id }</p>
-            <p>${article.writeDate}</p>
-            </div>
-    </div>
-</div>
+							<div class="test2">
+								<p>${article.id }</p>
+								<p>${article.writeDate}</p>
+							</div>
+						</div>
+					</div>
 
-</c:forEach>
-</c:when>
-</c:choose>
+				</c:forEach>
+			</c:when>
+		</c:choose>
 
 
 	</div>
@@ -163,13 +172,13 @@ request.setCharacterEncoding("UTF-8");
 
 
 
-		<!-- 하단 글 갯수 리스트 -->
+	<!-- 하단 글 갯수 리스트 -->
 	<div class="bottomPaging">
 		<div class="pagingMenu">
 			<c:if test="${totArticles != null }">
 				<c:choose>
-				
-					<c:when test="${totArticles >100 }">					
+
+					<c:when test="${totArticles >100 }">
 						<!-- 글 개수가 100 초과인경우 -->
 						<c:forEach var="page" begin="1" end="10" step="1">
 							<c:if test="${section >1 && page==1 }">
@@ -187,17 +196,17 @@ request.setCharacterEncoding("UTF-8");
 							</c:if>
 						</c:forEach>
 					</c:when>
-					
-					
-					<c:when test="${totArticles ==100 }">					
+
+
+					<c:when test="${totArticles ==100 }">
 						<!--등록된 글 개수가 100개인경우  -->
 						<c:forEach var="page" begin="1" end="10" step="1">
 							<a class="no-uline" href="#">${page } </a>
 						</c:forEach>
 					</c:when>
 					<c:when test="${totArticles< 100 }">
-					
-					
+
+
 						<!--등록된 글 개수가 100개 미만인 경우  -->
 						<c:forEach var="page" begin="1" end="${totArticles/13 +1}"
 							step="1">

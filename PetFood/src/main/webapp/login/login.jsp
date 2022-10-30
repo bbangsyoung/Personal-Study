@@ -8,6 +8,16 @@
 <head>
 <meta charset="UTF-8">
 <style>
+ul,li{margin: 0;padding: 0;}
+a {text-decoration : none; color : #333333; font: normal 12px/1.5em Arial, sans-serif; color: #333;}
+
+.login_list{width: 300px; list-style: none;}
+.login_list li:nth-child(1){margin-left : 30px;}
+.login_list li{float: left; padding: 0 10px; margin-left : 5px;}
+.login_list a{color: #333; text-decoration: none;}
+.login_list li:hover a{text-decoration: underline;}
+
+
 #top_wrap {
     width: 100%;
     height: 50px;
@@ -36,7 +46,7 @@
     width: 500px;
     margin: 0 auto;
     margin-top: 100px;
-    height: 500px;
+    height: 580px;
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.93);
     border: 1px solid #ccc;
@@ -125,7 +135,7 @@
 <body>
 <div id="login">
   <div id="top_wrap">
-      <h1>LOGIN</h1>
+      <h1><a href="../view/main.jsp">LOGIN</a></h1>
   </div>
 
   <div id="login_con">
@@ -143,6 +153,11 @@
               <p id="btn_wrap1">
                   <input type="submit" id="s_btn1" class="s_btn" value="로그인">
               </p><!-- btn_wrap1 -->
+              <ul class="login_list">
+                  <li><a href="id_find.jsp">아이디 찾기</a></li>
+                  <li><a href="id_find.jsp">비밀번호 찾기</a></li>
+                  <li><a href="../PetFood_SignUp.jsp">회원가입</a></li>
+              </ul>
           </form>
       </div><!-- 회원로그인, login1 -->
   </div><!-- login_con -->

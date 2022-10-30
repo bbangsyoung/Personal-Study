@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>아이디 찾기 결과창</title>
 </head>
 <body>
-테스트용
+<h4>아이디 : "${findId }"</h4>
+
 </body>
 </html>

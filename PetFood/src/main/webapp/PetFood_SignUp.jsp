@@ -182,7 +182,7 @@ var sw=0;
 function loadFn() {
     var userid = $("#userId").val();
     $.ajax({
-        url: "dbselid.jsp",		// 데이터를 가져올 경로 설정
+        url: "SearchController",		// 데이터를 가져올 경로 설정
         type: "get",		// 데이터를 가져오는 방식
         data: {userId : userid},
         success: function(data){	// 데이터를 가져왔을때 동작. 매개변수로 data 입력
@@ -372,7 +372,7 @@ function characterCheck(obj){
 	<div id="join_cotaier">
         <h3>회원가입</h3>
         <p class="information"><strong class="point">*</strong> 는 필수입력 항목을 나타냅니다.</p>
-        <form action="joinOK.jsp" method="get" id="join">
+        <form action="SignUpController" method="post" id="join">
             <fieldset class="join1">
                 <legend>필수 입력 항목</legend>
                 <p class="inbox"><label for="userName"><strong class="point">*</strong> 이름</label><input type="text" id="userName" name="userName" autocomplete="off" required></p>
