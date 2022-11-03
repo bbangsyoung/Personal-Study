@@ -5,16 +5,17 @@ import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-
+@Service
+@Transactional
 public class MemberService {
 
-    private final MemberRepository memberRepository;
-
-
+    private  final  MemberRepository memberRepository;
+    @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
@@ -22,29 +23,29 @@ public class MemberService {
 
 
     //회원가입
-    public Long join(Member member) {
+    public Long join(Member member){
 
-        //아래 extracted 메소드를 전체 선택 후
-        // 컨트롤+알트+쉬프트+T 누르면 따로 메서드를 쑦 뽑아줌
-        validateDuplicateMember(member); //같은 이름이 있는 중복회원X
+        validateDuplicateMember(member);  //중복회원검증
+
         memberRepository.save(member);
         return member.getId();
     }
 
+   //join에서 따로 뺀 메소드
     private void validateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())
-                .ifPresent(m -> {
+                .ifPresent( m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
 
-    //전체회원 조회
-    public List<Member> findMembers() {
-        return  memberRepository.findAll();
+    //전체 회원 조회
+    public List<Member> findMembers(){
+        return memberRepository.findAll();
     }
 
-    //개별회원조회
-    public Optional<Member> findOne(Long memberId) {
+    //개별 회원 조회
+    public Optional<Member> findOne(Long memberId){
         return memberRepository.findById(memberId);
     }
 
